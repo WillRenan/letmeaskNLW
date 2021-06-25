@@ -24,13 +24,13 @@ type AuthContextProviderProps = {
   children: ReactNode;
 }
 //criando contexto
-export const AuthContext = createContext({} as AuthContextType); // inicializando o contexto dizendo que tipo de dados ele vai receber, esse caso um objeto{}
+export const AuthContext = createContext({} as AuthContextType); // inicializando o contexto dizendo que tipo de dados ele vai receber, esse caso um objeto
 
 export function AuthContextProvider(props: AuthContextProviderProps) {
 
   const [user, setUser] = useState<User>(); // criando estado para AuthContext
 
-  useEffect(() => {
+  useEffect(() => { //pegando e verificando se o login ta feito ou n
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         const { displayName, photoURL, uid } = user;//pegando nome, foto e id do usuário
@@ -57,14 +57,14 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
 
     //fazendo autenticação com o Firebase
     const provider = new firebase.auth.GoogleAuthProvider(); // pegando autenticação do google com o Firebase
-    const result = await auth.signInWithPopup(provider);
+    const result = await auth.signInWithPopup(provider);//abrindo Popup na janela do usuário
 
     if (result.user) {
       const { displayName, photoURL, uid } = result.user;//pegando nome, foto e id do usuário
 
 
       if (!displayName || !photoURL) {
-        throw new Error('Missing information from Google Account.')
+        throw new Error('Missing information from Google Account.');
       }
 
       setUser({
